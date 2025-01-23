@@ -5,8 +5,8 @@ Cursor와 Windsurf에서 공통적으로 사용하는 글로벌 규칙 설정 �
 
 ## 설정 파일 생성
 
-- Cursor: 최상단 루트 폴더에 `.cursorrules` 파일 생성
-- Windsurf: 최상단 루트 폴더에 `.windsurfrules` 파일 생성
+- Cursor: 최상단 루트 폴더에 `.cursorrules` 파일 생성 후 규칙 내용 붙여넣기
+- Windsurf: 최상단 루트 폴더에 `.windsurfrules` 파일 생성 후 규칙 내용 붙여넣기
 
 ## Next.js / React 공통 규칙
 
