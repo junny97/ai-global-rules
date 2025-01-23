@@ -1,9 +1,12 @@
-# ai-global-rules
+# AI Global Rules
 
-Cursor / windsurf 에서 공통적으로 사용되는 공용 규칙 설정한 파일
-해당 문서는 [ai-rules.md](https://gist.github.com/devbrother2024/30e2d7784316f367f06953070abf29d5)의 설정에 기반하여 Next.js / React 공통 프로젝트의 관한 세부 규칙을 추가/ React 전용 규칙을 추가하여 작성하였습니다.
+Cursor와 Windsurf에서 공통적으로 사용하는 글로벌 규칙 설정 문서입니다.
+해당 문서는 [ai-rules.md](https://gist.github.com/devbrother2024/30e2d7784316f367f06953070abf29d5)의 규칙을 기반으로 하며, 기존 Next.js 설정 규칙을 고도화 하고 React 공통 프로젝트에 적합한 세부 규칙과 React 전용 규칙을 추가하여 작성되었습니다.
 
----
+## 설정 파일 생성
+
+- Cursor: 최상단 루트 폴더에 `.cursorrules` 파일 생성
+- Windsurf: 최상단 루트 폴더에 `.windsurfrules` 파일 생성
 
 ## Next.js / React 공통 규칙
 
@@ -74,50 +77,19 @@ export interface IComment {
 
 #### 병렬 쿼리 처리
 
-- 여러 개의 독립적인 쿼리를 동시에 실행해야 할 경우 `useQueries`를 사용하세요
+- 여러 개의 병렬적인 쿼리를 동시에 실행해야 할 경우 `useQueries`를 사용하세요
 - `useQueries`는 각 쿼리의 상태를 개별적으로 관리하며, 모든 쿼리의 결과를 배열로 반환하세요
-
-```typescript
-// ❌ 잘못된 예시: 여러 개의 useQuery 사용
-const result1 = useQuery({ queryKey: ['todos'], queryFn: fetchTodos });
-const result2 = useQuery({ queryKey: ['users'], queryFn: fetchUsers });
-const result3 = useQuery({ queryKey: ['posts'], queryFn: fetchPosts });
-
-// ✅ 좋은 예시: useQueries 사용
-const results = useQueries({
-  queries: [
-    { queryKey: ['todos'], queryFn: fetchTodos },
-    { queryKey: ['users'], queryFn: fetchUsers },
-    { queryKey: ['posts'], queryFn: fetchPosts },
-  ],
-});
-```
 
 ### 전역 상태 관리 규칙
 
 #### 기본 원칙
 
 - 불필요한 전역 상태 관리는 최소화하세요
-  - 컴포넌트 로컬 상태로 충분한 경우 `useState`를 사용하세요
+  - 컴포넌트 로컬 상태로 충분한 경우 `useState` 나 `useReducer`를 사용하세요
   - 컴포넌트 트리 깊이가 깊지 않은 경우 props drilling이 더 명확할 수 있습니다
 - 전역 상태관리가 필요하다고 판단될 때 Zustand를 사용하세요
   - 복잡한 상태 로직이 필요한 경우
   - 여러 컴포넌트에서 공유되는 상태가 많은 경우
-
-```typescript
-// store/useStore.ts 예시
-import create from 'zustand';
-
-interface IStore {
-  count: number;
-  increment: () => void;
-}
-
-export const useStore = create<IStore>((set) => ({
-  count: 0,
-  increment: () => set((state) => ({ count: state.count + 1 })),
-}));
-```
 
 #### Zustand 스토어 구독 최적화
 
